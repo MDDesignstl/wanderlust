@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/html">
+
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: nav"></nav>
+<div class="text-center">
+    <div class="container">
+        <div class="row">
+            <form class="form-signin" method="post" th:object="${userSignInForm}">
+                <h1 class="logo">Wanderlust</h1>
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                <label for="username" class="sr-only">Username</label>
+                <input type="username" id="username" name="username" th:field="*{username}" class="form-control" placeholder="Username" required="" autofocus=""></input>
+                <span th:errors="*{username}" class="error"></span>
+
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" name="inputPassword" th:field="*{password}" class="form-control" placeholder="Password" required=""></input>
+                <span th:errors="*{password}" class="error"></span><br></br>
+                <span th:if="${InvalidLogin}" th:text="${InvalidLogin}" class = "error"></span>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me</input>
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <br></br>
+            </form>
+        </div>
+        <div class="row">
+            <form action="/wander" class="form-signin">
+                <button class="btn btn-lg btn-primary btn-block">Wander as a Guest</button>
+            </form>
+        </div>
+        <div class="row">
+            <p class="mt-5 mb-3">&copy; Michael Dill 2018</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
