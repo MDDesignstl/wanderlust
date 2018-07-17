@@ -28,6 +28,7 @@ public class User {
     private String email;
 
     @OneToMany
+    @JoinColumn(name = "user_id")
     private List<Favorite> favorites = new ArrayList<>();
 
     public User() {

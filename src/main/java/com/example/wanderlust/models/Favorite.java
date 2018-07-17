@@ -13,37 +13,19 @@ public class Favorite {
     @NotNull
     private String name;
 
-    @Column(unique=true)
     @NotNull
     private String  place_id;
 
-    @NotNull
-    private String lng;
-
-    @NotNull
-    private String lat;
-
-    @NotNull
     @ManyToOne
     private User user;
 
     public Favorite() {
     }
 
-    public Favorite(String name, String place_id, String lng, String lat, User user) {
-        this.name = name;
-        this.place_id = place_id;
-        this.lng = lng;
-        this.lat = lat;
-        this.user = user;
-    }
-
-    public Favorite(Integer id, String name, String place_id, String lng, String lat, User user) {
+    public Favorite(Integer id, String name, String place_id, User user) {
         this.id = id;
         this.name = name;
         this.place_id = place_id;
-        this.lng = lng;
-        this.lat = lat;
         this.user = user;
     }
 
@@ -69,22 +51,6 @@ public class Favorite {
 
     public void setPlace_id(String place_id) {
         this.place_id = place_id;
-    }
-
-    public String getLng() {
-        return lng;
-    }
-
-    public void setLng(String lng) {
-        this.lng = lng;
-    }
-
-    public String getLat() {
-        return lat;
-    }
-
-    public void setLat(String lat) {
-        this.lat = lat;
     }
 
     public User getUser() {

@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
+<script th:inline="javascript"  th:if="${Result} and ${currentUser}">
+
+/*<![CDATA[*/
+
+    function addFavorite(){
+        var name = /*[[${Result.name}]]*/;
+        var placeId = /*[[${Result.placeId}]]*/;
+        var userId = /*[[${currentUser.userId}]]*/;
+
+        requestUrl = "api/addFavorite?name=" + name + "&placeId=" + placeId + "&userId=" + userId;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+             // Typical action to be performed when the document is ready:
+             alert("Added to favorites");
+            }
+        };
+        xhttp.open("GET", requestUrl, true);
+        xhttp.send();
+    }
+
+
+
+/*]]>*/
+
+</script>
 
 <body>
 <nav th:replace="fragments :: nav"></nav>
+
 <div class="text-center">
     <div class="container content">
         <h1 class="logo">Wanderlust</h1>
@@ -23,11 +51,11 @@
         <div class="results row" th:if="${Result}">
 
             <h1 th:text="${Result.name}"></h1>
-            <h3 th:text="${Result.placeId}"></h3>
-            <h3 th:text="${Result.priceLevel}"></h3>
-            <h3 th:text="${Result.rating}"></h3>
+            <h3 th:text="'Price Level: ' + ${Result.priceLevel}"></h3>
+            <h3 th:text="'Rating: ' + ${Result.rating}"></h3>
 
-            <a th:href="${directionsUrl}" target="_blank">Get Directions</a>
+            <a th:href="${directionsUrl}" target="_blank"><button class="bottom-button btn btn-lg btn-primary">Get Directions</button></a>
+            <button th:if="${Result} and ${currentUser}" onclick="addFavorite()" class="bottom-button btn btn-lg btn-primary">Add to Favorites &#10084;</button>
         </div>
         <div class="row">
             <p class="mt-5 mb-3">&copy; 2017-2018</p>
