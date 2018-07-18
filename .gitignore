@@ -4,8 +4,6 @@
 src/main/resources/wander.properties.template
 src/main/resources/application.properties.template
 out/
-gradlew
-gradlew.bat
 
 
 ### STS ###
