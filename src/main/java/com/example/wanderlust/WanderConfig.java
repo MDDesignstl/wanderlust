@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotNull;
 
 @Component
-@PropertySource("classpath:wander.properties")
+@PropertySource("classpath:application.properties")
 @ConfigurationProperties
 public class WanderConfig {
 
