@@ -2,7 +2,9 @@ package com.example.wanderlust;
 
 import javax.validation.constraints.NotNull;
 
-
+@Component
+@PropertySource("classpath:wander.properties")
+@ConfigurationProperties
 public class WanderConfig {
 
     @NotNull
