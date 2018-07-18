@@ -14,6 +14,7 @@ import java.util.*;
 @Service
 public class SearchService {
 
+    @Autowired
     private static WanderConfig wanderConfig;
 
     @Autowired

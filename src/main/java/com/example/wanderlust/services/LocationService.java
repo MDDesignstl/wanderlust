@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class LocationService {
 
+    @Autowired
     private static WanderConfig wanderConfig;
 
     @Autowired
