@@ -17,11 +17,6 @@ public class SearchService {
     @Autowired
     private static WanderConfig wanderConfig;
 
-    @Autowired
-    public void setWanderConfig(WanderConfig wanderConfig) {
-        SearchService.wanderConfig = wanderConfig;
-    }
-
     public static Result findRandomLocation(Location location, String wandType){
 
         List<Result> resultsArray;

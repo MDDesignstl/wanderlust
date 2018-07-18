@@ -13,11 +13,6 @@ public class LocationService {
     @Autowired
     private static WanderConfig wanderConfig;
 
-    @Autowired
-    public void setWanderConfig(WanderConfig wanderConfig) {
-        LocationService.wanderConfig = wanderConfig;
-    }
-
     public static Location getLocation() {
 
         String locationRequest = "https://www.googleapis.com/geolocation/v1/geolocate?key=" +
