@@ -27,6 +27,7 @@ public class HomeController {
 
     @Autowired
     private UserDao userDao;
+
     private Object customErrors;
     private Object errors;
 
@@ -35,6 +36,8 @@ public class HomeController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String displayIndex(HttpSession session,
                                Model model) {
+
+        //TODO: remember me functionality
 
         if(session.getAttribute("currentUser") != null) {
             return "redirect:/wander";

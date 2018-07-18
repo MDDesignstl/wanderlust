@@ -27,7 +27,9 @@ public class ApiController {
     @RequestMapping(value = "addFavorite", method = RequestMethod.GET)
     public String addFavorite(@RequestParam("name") String name,
                               @RequestParam("placeId") String placeId,
-                              @RequestParam("userId") int userId,
+                              @RequestParam("userId") Integer userId,
+                              @RequestParam("priceLevel") Integer priceLevel,
+                              @RequestParam("rating") double rating,
                               Model model) {
 
         User currentUser = userDao.findOne(userId);
@@ -39,9 +41,20 @@ public class ApiController {
         newFavorite.setName(name);
         newFavorite.setPlace_id(placeId);
         newFavorite.setUser(currentUser);
+        newFavorite.setPriceLevel(priceLevel);
+        newFavorite.setRating(rating);
 
         favoriteDao.save(newFavorite);
 
         return "{\n\"message\": \"Favorites Updated\"\n}";
+    }
+
+    @RequestMapping(value = "removeFavorite", method = RequestMethod.GET)
+    public String removeFavorite(@RequestParam("favoriteId") Integer favoriteId,
+                              Model model) {
+
+        favoriteDao.delete(favoriteId);
+
+        return "{\n\"message\": \"Favorite Removed\"\n}";
     }
 }

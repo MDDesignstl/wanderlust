@@ -9,8 +9,22 @@
         var name = /*[[${Result.name}]]*/;
         var placeId = /*[[${Result.placeId}]]*/;
         var userId = /*[[${currentUser.userId}]]*/;
+        var priceLevel = /*[[${Result.priceLevel}]]*/;
+        priceLevel = priceLevel != null ? priceLevel : "0";
+        var rating = /*[[${Result.rating}]]*/;
+        rating = rating != null ? rating : "0";
+            var port = ""
 
-        requestUrl = "api/addFavorite?name=" + name + "&placeId=" + placeId + "&userId=" + userId;
+        if (window.location.port) {
+            port = ":" + window.location.port
+        }
+
+
+        requestUrl = "http://" + window.location.hostname + port + "/api/addFavorite?name=" + name +
+        "&placeId=" + placeId +
+        "&userId=" + userId +
+        "&priceLevel=" + priceLevel +
+        "&rating=" + rating;
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -51,7 +65,7 @@
         <div class="results row" th:if="${Result}">
 
             <h1 th:text="${Result.name}"></h1>
-            <h3 th:text="'Price Level: ' + ${Result.priceLevel}"></h3>
+            <h3 th:if="${Result.priceLevel}" th:text="'Price Level: ' + ${Result.priceLevel}"></h3>
             <h3 th:text="'Rating: ' + ${Result.rating}"></h3>
 
             <a th:href="${directionsUrl}" target="_blank"><button class="bottom-button btn btn-lg btn-primary">Get Directions</button></a>

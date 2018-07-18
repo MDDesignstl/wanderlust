@@ -13,5 +13,3 @@ public class WanderlustApplication {
 		SpringApplication.run(WanderlustApplication.class, args);
 	}
 }
-
-//TODO: implement favorites page

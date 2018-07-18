@@ -94,3 +94,16 @@ form .form-control:focus {
       -webkit-box-pack: center;
       justify-content: center;
  }
+
+ .favorites {
+    text-align: left;
+ }
+
+ .favorites td {
+    padding: 5px;
+ }
+
+.favName {
+    width: 20%
+    min-width: 300px;
+}
