@@ -77,3 +77,33 @@ form .form-control:focus {
     font-family: 'Galada', cursive;
     font-size: 60px;
  }
+
+ bottom-button {
+    width: 300px;
+ }
+
+ .alert {
+    position: fixed;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    -ms-flex-align: center;
+      -ms-flex-pack: center;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+ }
+
+ .favorites {
+    text-align: left;
+ }
+
+ .favorites td {
+    padding: 5px;
+ }
+
+.favName {
+    width: 20%
+    min-width: 300px;
+}

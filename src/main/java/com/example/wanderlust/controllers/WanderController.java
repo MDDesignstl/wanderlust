@@ -1,7 +1,10 @@
 package com.example.wanderlust.controllers;
 
 import com.example.wanderlust.models.*;
+import com.example.wanderlust.models.data.FavoriteDao;
+import com.example.wanderlust.models.data.UserDao;
 import com.example.wanderlust.services.SearchService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +17,19 @@ import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @Controller
 @RequestMapping("wander")
 public class WanderController {
+
+    @Autowired
+    FavoriteDao favoriteDao;
+
+    @Autowired
+    UserDao userDao;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(HttpSession session,
@@ -67,6 +78,34 @@ public class WanderController {
         model.addAttribute("Result",result);
 
         return "wander/index";
+
+    }
+
+    @RequestMapping(value = "favorites", method = RequestMethod.GET)
+    public String favorites(HttpSession session,
+                        Model model){
+
+        UserSession currentUser = new UserSession();
+
+        if(session.getAttribute("currentUser") == null) {
+            return "redirect:../";
+        } else {
+            currentUser = (UserSession) session.getAttribute("currentUser");
+            model.addAttribute("currentUser", currentUser);
+        }
+
+        ArrayList<Favorite> allFavorites = (ArrayList<Favorite>) favoriteDao.findAll();
+        ArrayList<Favorite> userFavorites = new ArrayList<>();
+
+        for ( Favorite favorite : allFavorites) {
+            if (favorite.getUser().getId().equals(currentUser.getUserId())) {
+                userFavorites.add(favorite);
+                }
+            }
+
+        model.addAttribute("Results", userFavorites);
+
+        return "wander/favorites";
 
     }
 

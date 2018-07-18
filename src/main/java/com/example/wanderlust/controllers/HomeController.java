@@ -27,6 +27,7 @@ public class HomeController {
 
     @Autowired
     private UserDao userDao;
+
     private Object customErrors;
     private Object errors;
 
@@ -35,6 +36,8 @@ public class HomeController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String displayIndex(HttpSession session,
                                Model model) {
+
+        //TODO: remember me functionality
 
         if(session.getAttribute("currentUser") != null) {
             return "redirect:/wander";
@@ -116,7 +119,8 @@ public class HomeController {
     //process signup page
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
-    public String processAddUserForm(@ModelAttribute @Valid UserSignUpForm newUserSignUpForm,
+    public String processAddUserForm(HttpSession session,
+                                     @ModelAttribute @Valid UserSignUpForm newUserSignUpForm,
                                        Errors errors,
                                        Model model) {
 
@@ -158,7 +162,10 @@ public class HomeController {
         //Persist user to DB
         userDao.save(newUser);
 
-        model.addAttribute("currentUser", newUser );
+        UserSession userSession = new UserSession(newUser.getId(),
+                newUser.getUsername(),
+                newUser.getEmail());
+        session.setAttribute("currentUser", userSession);
 
         return "redirect:/wander";
     }

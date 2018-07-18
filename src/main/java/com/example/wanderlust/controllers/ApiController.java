@@ -11,38 +11,50 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpStatusCodeException;
 
-@Controller
+@RestController
 @RequestMapping("api")
 public class ApiController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
     private FavoriteDao favoriteDao;
 
     @RequestMapping(value = "addFavorite", method = RequestMethod.GET)
     public String addFavorite(@RequestParam("name") String name,
-                              @RequestParam("place_id") String place_id,
-                              @RequestParam("lng") String lng,
-                              @RequestParam("lat") String lat,
-                              @RequestParam("userId") int userId,
+                              @RequestParam("placeId") String placeId,
+                              @RequestParam("userId") Integer userId,
+                              @RequestParam("priceLevel") Integer priceLevel,
+                              @RequestParam("rating") double rating,
                               Model model) {
 
         User currentUser = userDao.findOne(userId);
 
-        Favorite newFavorite = new Favorite(name,
-                place_id,
-                lng,
-                lat,
-                currentUser);
+
+        //TODO: check to see if favorite is a duplicate for user
+
+        Favorite newFavorite = new Favorite();
+        newFavorite.setName(name);
+        newFavorite.setPlace_id(placeId);
+        newFavorite.setUser(currentUser);
+        newFavorite.setPriceLevel(priceLevel);
+        newFavorite.setRating(rating);
 
         favoriteDao.save(newFavorite);
 
-        currentUser.addFavorite(newFavorite);
-
-        userDao.save(currentUser);
-
         return "{\n\"message\": \"Favorites Updated\"\n}";
+    }
+
+    @RequestMapping(value = "removeFavorite", method = RequestMethod.GET)
+    public String removeFavorite(@RequestParam("favoriteId") Integer favoriteId,
+                              Model model) {
+
+        favoriteDao.delete(favoriteId);
+
+        return "{\n\"message\": \"Favorite Removed\"\n}";
     }
 }
