@@ -14,10 +14,14 @@ import java.util.*;
 @Service
 public class SearchService {
 
-    @Autowired
     private static WanderConfig wanderConfig;
 
-    public Result findRandomLocation(Location location, String wandType){
+    @Autowired
+    public void setWanderConfig(WanderConfig wanderConfig) {
+        SearchService.wanderConfig = wanderConfig;
+    }
+
+    public static Result findRandomLocation(Location location, String wandType){
 
         List<Result> resultsArray;
 
@@ -51,14 +55,14 @@ public class SearchService {
 
     }
 
-    private List<Result> queryForPlaces(Location location, String radius, String type) {
+    private static List<Result> queryForPlaces(Location location, String radius, String type) {
 
         String locationString = String.valueOf(location.getLat()) + "," + String.valueOf(location.getLng());
 
         System.out.println(locationString);
 
         String randomLocationRequest = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" +
-                this.wanderConfig.getGoogleApiKey() +
+                wanderConfig.getGoogleApiKey() +
                 "&type=" + type +
                 "&radius=" + radius +
                 "&location=" + locationString;
@@ -78,11 +82,11 @@ public class SearchService {
         return resultsArray;
     }
 
-    private List<Result> queryForPlacesNextPage(String nextPageToken, ArrayList<Result> resultsArray){
+    private static List<Result> queryForPlacesNextPage(String nextPageToken, ArrayList<Result> resultsArray){
 
 
         String randomLocationRequest = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" +
-                this.wanderConfig.getGoogleApiKey() +
+                wanderConfig.getGoogleApiKey() +
                 "&pagetoken=" + nextPageToken;
 
         RestTemplate restTemplate = new RestTemplate();
@@ -103,14 +107,14 @@ public class SearchService {
 
     }
 
-    public byte[] getPhotoUrl(String maxWidth, String photoReference){
+    public static byte[] getPhotoUrl(String maxWidth, String photoReference){
 
         RestTemplate restTemplate = new RestTemplate();
 
         String photoRequestUrl ="https://maps.googleapis.com/maps/api/place/photo?" +
                 "&maxwidth=" + maxWidth +
                 "&photoreference=" + photoReference +
-                "&key=" + this.wanderConfig.getGoogleApiKey();
+                "&key=" + wanderConfig.getGoogleApiKey();
 
         return restTemplate.getForObject(photoRequestUrl,byte[].class);
 
