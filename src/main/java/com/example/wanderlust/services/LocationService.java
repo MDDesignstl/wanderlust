@@ -11,9 +11,9 @@ import org.springframework.web.client.RestTemplate;
 public class LocationService {
 
     @Autowired
-    private static WanderConfig wanderConfig;
+    private WanderConfig wanderConfig;
 
-    public static Location getLocation() {
+    public Location getLocation() {
 
         String locationRequest = "https://www.googleapis.com/geolocation/v1/geolocate?key=" +
                 wanderConfig.getGoogleApiKey();
