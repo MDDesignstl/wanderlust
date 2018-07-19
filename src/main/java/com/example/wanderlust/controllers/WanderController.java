@@ -52,13 +52,15 @@ public class WanderController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String result(HttpSession session,
                          Model model,
-                         @RequestParam String wandType){
+                         @RequestParam String wandType,
+                         @RequestParam String lng,
+                         @RequestParam String lat){
 
         if(session.getAttribute("currentUser") != null) {
             model.addAttribute("currentUser", session.getAttribute("currentUser"));
         }
 
-        Location location = locationService.getLocation();
+        Location location = new Location(Double.parseDouble(lat), Double.parseDouble(lng));
 
         Result result = searchService.findRandomLocation(location, wandType);
 

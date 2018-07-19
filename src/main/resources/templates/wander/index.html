@@ -5,6 +5,26 @@
 
 /*<![CDATA[*/
 
+    $(document).ready(function(){
+
+        function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(setPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+            }
+        }
+        function setPosition(position) {
+            var lng = document.getElementById("lng");
+            var lat = document.getElementById("lat");
+
+            lng.value = position.coords.longitude;
+            lat.value = position.coords.latitude;
+
+        }
+
+    });
+
     function addFavorite(){
         var name = /*[[${Result.name}]]*/;
         var placeId = /*[[${Result.placeId}]]*/;
@@ -58,6 +78,8 @@
                 </select>
                 <br></br>
 
+                <input type="hidden" id="lng" name="lng">
+                <input type="hidden" id="lat" name="lat">
                 <button class="btn btn-lg btn-primary btn-block " type="submit">Wander</button>
 
             </form>
