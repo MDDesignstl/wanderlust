@@ -4,13 +4,12 @@
 <script>
     $(document).ready(function(){
 
-        function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(setPosition);
         } else {
             alert("Geolocation is not supported by this browser.");
             }
-        }
+
         function setPosition(position) {
             var lng = document.getElementById("lng");
             var lat = document.getElementById("lat");
