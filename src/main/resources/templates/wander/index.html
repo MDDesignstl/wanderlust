@@ -5,6 +5,7 @@
 $(document).ready(function(){
 
         if (navigator.geolocation) {
+            var positionOption = { timeout: 500, enableHighAccuracy: true };
             navigator.geolocation.getCurrentPosition(function (position){
 
                 var lng = document.getElementById("lng");
@@ -12,10 +13,12 @@ $(document).ready(function(){
 
                 lng.value = position.coords.longitude;
                 lat.value = position.coords.latitude;
-                }
-            ,function(error){
+                },
+            function(error){
                 console.log(error);
-            });
+            },
+            positionOption
+            );
         } else {
             alert("Geolocation is not supported by this browser.");
             }
