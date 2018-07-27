@@ -4,8 +4,6 @@
 <script>
 $(document).ready(function(){
 
-        function getLocation() {
-
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position){
 
@@ -21,9 +19,6 @@ $(document).ready(function(){
         } else {
             alert("Geolocation is not supported by this browser.");
             }
-        }
-
-
     });
 
 </script>
