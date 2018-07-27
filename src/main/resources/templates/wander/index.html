@@ -2,24 +2,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <script>
-    $(document).ready(function(){
+$(document).ready(function(){
+
+        function getLocation() {
 
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(setPosition);
+            navigator.geolocation.getCurrentPosition(function (position){
+
+                var lng = document.getElementById("lng");
+                var lat = document.getElementById("lat");
+
+                lng.value = position.coords.longitude;
+                lat.value = position.coords.latitude;
+                }
+            ,function(error){
+                console.log(error);
+            });
         } else {
             alert("Geolocation is not supported by this browser.");
             }
-
-        function setPosition(position) {
-            var lng = document.getElementById("lng");
-            var lat = document.getElementById("lat");
-
-            lng.value = position.coords.longitude;
-            lat.value = position.coords.latitude;
-
         }
 
+
     });
+
 </script>
 <script th:inline="javascript"  th:if="${Result} and ${currentUser}">
 
