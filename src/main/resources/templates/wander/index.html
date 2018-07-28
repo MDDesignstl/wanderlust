@@ -1,6 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
+<script>
+$(document).ready(function(){
+
+        if (navigator.geolocation) {
+            var positionOption = { timeout: 500, enableHighAccuracy: true };
+            navigator.geolocation.getCurrentPosition(function (position){
+
+                var lng = document.getElementById("lng");
+                var lat = document.getElementById("lat");
+
+                lng.value = position.coords.longitude;
+                lat.value = position.coords.latitude;
+                },
+            function(error){
+                console.log(error);
+            },
+            positionOption
+            );
+        } else {
+            alert("Geolocation is not supported by this browser.");
+            }
+    });
+
+</script>
 <script th:inline="javascript"  th:if="${Result} and ${currentUser}">
 
 /*<![CDATA[*/
@@ -20,7 +44,7 @@
         }
 
 
-        requestUrl = "http://" + window.location.hostname + port + "/api/addFavorite?name=" + name +
+        requestUrl = "https://" + window.location.hostname + port + "/api/addFavorite?name=" + name +
         "&placeId=" + placeId +
         "&userId=" + userId +
         "&priceLevel=" + priceLevel +
@@ -58,6 +82,8 @@
                 </select>
                 <br></br>
 
+                <input type="hidden" id="lng" name="lng"></input>
+                <input type="hidden" id="lat" name="lat"></input>
                 <button class="btn btn-lg btn-primary btn-block " type="submit">Wander</button>
 
             </form>

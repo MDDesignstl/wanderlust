@@ -13,7 +13,7 @@
         port = ":" + window.location.port
     }
 
-    requestUrl = "http://" + window.location.hostname + port + "/api/removeFavorite?favoriteId=" + favId;
+    requestUrl = "https://" + window.location.hostname + port + "/api/removeFavorite?favoriteId=" + favId;
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

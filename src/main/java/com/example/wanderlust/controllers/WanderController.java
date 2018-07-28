@@ -31,6 +31,12 @@ public class WanderController {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    LocationService locationService;
+
+    @Autowired
+    SearchService searchService;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(HttpSession session,
                         Model model){
@@ -46,18 +52,20 @@ public class WanderController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String result(HttpSession session,
                          Model model,
-                         @RequestParam String wandType){
+                         @RequestParam String wandType,
+                         @RequestParam String lng,
+                         @RequestParam String lat){
 
         if(session.getAttribute("currentUser") != null) {
             model.addAttribute("currentUser", session.getAttribute("currentUser"));
         }
 
-        Location location = LocationService.getLocation();
+        Location location = new Location(Double.parseDouble(lat), Double.parseDouble(lng));
 
-        Result result = SearchService.findRandomLocation(location, wandType);
+        Result result = searchService.findRandomLocation(location, wandType);
 
         /*if(result.getPhotos().get(0) != null) {
-            byte[] photo = SearchService.getPhotoUrl("400", result.getPhotos().get(0).getPhotoReference());
+            byte[] photo = searchService.getPhotoUrl("400", result.getPhotos().get(0).getPhotoReference());
             model.addAttribute("Photo", Base64.getEncoder().encode(photo));
         }*/
 

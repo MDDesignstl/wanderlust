@@ -14,14 +14,10 @@ import java.util.*;
 @Service
 public class SearchService {
 
-    private static WanderConfig wanderConfig;
-
     @Autowired
-    public void setWanderConfig(WanderConfig wanderConfig) {
-        SearchService.wanderConfig = wanderConfig;
-    }
+    private WanderConfig wanderConfig;
 
-    public static Result findRandomLocation(Location location, String wandType){
+    public Result findRandomLocation(Location location, String wandType){
 
         List<Result> resultsArray;
 
@@ -55,7 +51,7 @@ public class SearchService {
 
     }
 
-    private static List<Result> queryForPlaces(Location location, String radius, String type) {
+    private List<Result> queryForPlaces(Location location, String radius, String type) {
 
         String locationString = String.valueOf(location.getLat()) + "," + String.valueOf(location.getLng());
 
@@ -82,7 +78,7 @@ public class SearchService {
         return resultsArray;
     }
 
-    private static List<Result> queryForPlacesNextPage(String nextPageToken, ArrayList<Result> resultsArray){
+    private List<Result> queryForPlacesNextPage(String nextPageToken, ArrayList<Result> resultsArray){
 
 
         String randomLocationRequest = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" +
@@ -107,7 +103,7 @@ public class SearchService {
 
     }
 
-    public static byte[] getPhotoUrl(String maxWidth, String photoReference){
+    public byte[] getPhotoUrl(String maxWidth, String photoReference){
 
         RestTemplate restTemplate = new RestTemplate();
 
