@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<nav th:replace="fragments :: nav"></nav>
+
+<div class="text-center">
+    <div class="container content">
+        <h1 class="logo">Wanderlust</h1>
+        <div class="row">
+            <h1>Error:</h1>
+            <h1 th:text="${errorMessage}"></h1>
+        </div>
+        <div class="row">
+            <p class="mt-5 mb-3">&copy; 2017-2018</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

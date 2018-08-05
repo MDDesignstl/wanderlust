@@ -11,14 +11,12 @@
 <body>
 
 <nav class="navbar navbar-fixed-top" th:fragment="nav">
-    <ul th:if="${currentUser}" class="nav navbar-nav navbar-right">
-        <li><a th:text="'Hello, ' + ${currentUser.name} + '!'"></a></li>
-        <li><a th:href="@{/logout}" href="../logout">Logout</a></li>
-        <li><a th:href="@{/wander/favorites}" href="wander/favorites">Favorites</a></li>
-    </ul>
-    <ul th:unless="${currentUser}" class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right">
         <li><a th:href="@{/}" href="../">Home</a></li>
         <li><a th:href="@{/signup}" href="../signup">Signup</a></li>
+        <li th:if="${currentUser}" ><a th:text="'Hello, ' + ${currentUser.name} + '!'"></a></li>
+        <li th:if="${currentUser}" ><a th:href="@{/logout}" href="../logout">Logout</a></li>
+        <li th:if="${currentUser}" ><a th:href="@{/wander/favorites}" href="wander/favorites">Favorites</a></li>
     </ul>
 </nav>
 

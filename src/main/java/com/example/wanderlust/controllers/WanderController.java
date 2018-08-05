@@ -60,16 +60,17 @@ public class WanderController {
             model.addAttribute("currentUser", session.getAttribute("currentUser"));
         }
 
+        if (lng != "" && lat != "") {
+            Location location = new Location(Double.parseDouble(lat), Double.parseDouble(lng));
+        } else {
+            String errorMessage = "GeoLocation failed. Please allow this app to access your current location. If using a mobile device, please ensure that location is enabled.";
+            model.addAttribute("errorMessage", errorMessage);
+            return "redirect:wander/error";
+        }
+
         Location location = new Location(Double.parseDouble(lat), Double.parseDouble(lng));
 
         Result result = searchService.findRandomLocation(location, wandType);
-
-        /*if(result.getPhotos().get(0) != null) {
-            byte[] photo = searchService.getPhotoUrl("400", result.getPhotos().get(0).getPhotoReference());
-            model.addAttribute("Photo", Base64.getEncoder().encode(photo));
-        }*/
-
-        //create directions url
 
         try {
             String directionsUrl = "https://www.google.com/maps/dir/?api=1&dir_action=navigate"
