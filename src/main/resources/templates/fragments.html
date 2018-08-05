@@ -12,9 +12,9 @@
 
 <nav class="navbar navbar-fixed-top" th:fragment="nav">
     <ul class="nav navbar-nav navbar-right">
-        <li><a th:href="@{/}" href="../">Home</a></li>
-        <li><a th:href="@{/signup}" href="../signup">Signup</a></li>
         <li th:if="${currentUser}" ><a th:text="'Hello, ' + ${currentUser.name} + '!'"></a></li>
+        <li><a th:href="@{/}" href="../">Home</a></li>
+        <li><a th:unless="${currentUser}" th:href="@{/signup}" href="../signup">Signup</a></li>
         <li th:if="${currentUser}" ><a th:href="@{/logout}" href="../logout">Logout</a></li>
         <li th:if="${currentUser}" ><a th:href="@{/wander/favorites}" href="wander/favorites">Favorites</a></li>
     </ul>
