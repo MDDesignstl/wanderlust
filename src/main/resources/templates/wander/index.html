@@ -1,12 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
+
+<body>
+<nav th:replace="fragments :: nav"></nav>
+
+<div class="text-center">
+    <div class="container content">
+        <h1 class="logo">Wanderlust</h1>
+        <div class ="row">
+            <form method="post" action="/wander">
+
+                <select name="wandType" id="wandType" class="form-control dark">
+                    <option value="Food">Food</option>
+                    <option value="Activity">Activity</option>
+                </select>
+                <br></br>
+
+                <input type="hidden" id="lng" name="lng"></input>
+                <input type="hidden" id="lat" name="lat"></input>
+                <button class="btn btn-lg btn-primary btn-block " type="submit">Wander</button>
+
+            </form>
+        </div>
+        <div class="results row" th:if="${Result}">
+
+            <h1 th:text="${Result.name}"></h1>
+            <h3 th:if="${Result.priceLevel}" th:text="'Price Level: ' + ${Result.priceLevel}"></h3>
+            <h3 th:text="'Rating: ' + ${Result.rating}"></h3>
+
+            <a th:href="${directionsUrl}" target="_blank"><button class="bottom-button btn btn-lg btn-primary">Get Directions</button></a>
+            <button th:if="${Result} and ${currentUser}" onclick="addFavorite()" class="bottom-button btn btn-lg btn-primary">Add to Favorites &#10084;</button>
+        </div>
+        <div class="row">
+            <p class="mt-5 mb-3">&copy; 2017-2018</p>
+        </div>
+    </div>
+</div>
+</body>
 <script>
 $(document).ready(function(){
+
+        console.log(retrieving location); 
 
         if (navigator.geolocation) {
             var positionOption = { timeout: 500, enableHighAccuracy: true };
             navigator.geolocation.getCurrentPosition(function (position){
+
+            console.log(position.coords);
 
                 var lng = document.getElementById("lng");
                 var lat = document.getElementById("lat");
@@ -66,41 +107,4 @@ $(document).ready(function(){
 /*]]>*/
 
 </script>
-
-<body>
-<nav th:replace="fragments :: nav"></nav>
-
-<div class="text-center">
-    <div class="container content">
-        <h1 class="logo">Wanderlust</h1>
-        <div class ="row">
-            <form method="post" action="/wander">
-
-                <select name="wandType" id="wandType" class="form-control dark">
-                    <option value="Food">Food</option>
-                    <option value="Activity">Activity</option>
-                </select>
-                <br></br>
-
-                <input type="hidden" id="lng" name="lng"></input>
-                <input type="hidden" id="lat" name="lat"></input>
-                <button class="btn btn-lg btn-primary btn-block " type="submit">Wander</button>
-
-            </form>
-        </div>
-        <div class="results row" th:if="${Result}">
-
-            <h1 th:text="${Result.name}"></h1>
-            <h3 th:if="${Result.priceLevel}" th:text="'Price Level: ' + ${Result.priceLevel}"></h3>
-            <h3 th:text="'Rating: ' + ${Result.rating}"></h3>
-
-            <a th:href="${directionsUrl}" target="_blank"><button class="bottom-button btn btn-lg btn-primary">Get Directions</button></a>
-            <button th:if="${Result} and ${currentUser}" onclick="addFavorite()" class="bottom-button btn btn-lg btn-primary">Add to Favorites &#10084;</button>
-        </div>
-        <div class="row">
-            <p class="mt-5 mb-3">&copy; 2017-2018</p>
-        </div>
-    </div>
-</div>
-</body>
 </html>
