@@ -37,51 +37,13 @@
         </div>
     </div>
 </div>
-<script  th:inline="javascript">
+<script th:inline="javascript">
 /*<![CDATA[*/
 $(document).ready(function(){
-
-    var form = document.getElementsByTagName("form");
-    var lng = document.getElementById("lng");
-    var lat = document.getElementById("lat");
-
-    var currentCoords = getCookie("coords");
-
-    if ( currentCoords != "") {
-        coords = JSON.parse(currentCoords);
-
-        lng.value = coords.longitude;
-        lat.value = coords.latitude;
-        form[0].submit();// Form submission
-
-    } else {
-        if (navigator.geolocation) {
-                var positionOption = { timeout: 5000, enableHighAccuracy: true };
-                navigator.geolocation.getCurrentPosition(function (position){
-
-                console.log(position.coords);
-
-                var d = new Date();
-                d.setTime(d.getTime() + (60*60*1000));
-                var expires = "expires=" + d.toGMTString();
-                document.cookie = 'coords={"latitude": ' + position.coords.latitude +
-                    ', "longitude": ' + position.coords.longitude + '};' + expires + ";path=/";
-
-                lng.value = position.coords.longitude;
-                lat.value = position.coords.latitude;
-                form[0].submit();// Form submission
-
-                    },
-                function(error){
-                    alert("Geolocation Failed\nError: " + error);
-                    console.log(error);
-                },
-                positionOption
-                );
-            } else {
-                alert("Geolocation is not supported by this browser.");
-                }
-    }
+        if (!navigator.geolocation) {
+            alert("Geolocation is not supported by this browser.");
+        }
+    });
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -98,8 +60,54 @@ $(document).ready(function(){
         }
         return "";
     }
-});
-/*]]>*/
+
+    function getLocationAndSubmit() {
+        console.log("retrieving location");
+
+        var form = document.getElementsByTagName("form");
+        var lng = document.getElementById("lng");
+        var lat = document.getElementById("lat");
+
+        var currentCoords = getCookie("coords");
+
+        if ( currentCoords != "") {
+            coords = JSON.parse(currentCoords);
+
+            lng.value = coords.longitude;
+            lat.value = coords.latitude;
+            form[0].submit();// Form submission
+
+        } else {
+            if (navigator.geolocation) {
+                    var positionOption = { timeout: 5000, enableHighAccuracy: true };
+                    navigator.geolocation.getCurrentPosition(function (position){
+
+                    console.log(position.coords);
+
+                    var d = new Date();
+                    d.setTime(d.getTime() + (60*60*1000));
+                    var expires = "expires=" + d.toGMTString();
+                    document.cookie = 'coords={"latitude": ' + position.coords.latitude +
+                        ', "longitude": ' + position.coords.longitude + '};' + expires + ";path=/";
+
+                    lng.value = position.coords.longitude;
+                    lat.value = position.coords.latitude;
+                    form[0].submit();// Form submission
+
+                        },
+                    function(error){
+                        alert("Geolocation Failed\nError: " + error);
+                        console.log(error);
+                    },
+                    positionOption
+                    );
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                    }
+        }
+
+    }
+    /*]]>*/
 </script>
 <script th:inline="javascript"  th:if="${Result} and ${currentUser}">
 
