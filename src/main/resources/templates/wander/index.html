@@ -71,7 +71,7 @@ $(document).ready(function(){
         var currentCoords = getCookie("coords");
 
         if ( currentCoords != "") {
-            coords = JSON.parse(currentCoords);
+            coords = currentCoords;
 
             lng.value = coords.longitude;
             lat.value = coords.latitude;
