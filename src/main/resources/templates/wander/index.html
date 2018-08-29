@@ -37,7 +37,8 @@
         </div>
     </div>
 </div>
-<script>
+<script  th:inline="javascript">
+/*<![CDATA[*/
 $(document).ready(function(){
 
     var form = document.getElementsByTagName("form");
@@ -45,7 +46,7 @@ $(document).ready(function(){
     var lat = document.getElementById("lat");
 
     var currentCoords = getCookie("coords");
-    
+
     if ( currentCoords != "") {
         coords = JSON.parse(currentCoords);
 
@@ -98,6 +99,7 @@ $(document).ready(function(){
         return "";
     }
 });
+/*]]>*/
 </script>
 <script th:inline="javascript"  th:if="${Result} and ${currentUser}">
 
